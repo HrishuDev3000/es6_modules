@@ -1,6 +1,6 @@
 import WishList from "./wishlist";
 
-//Html selections
+// HTML selections
 const submitForm = document.querySelector("#submitForm");
 const makeInput = document.querySelector("#makeInput");
 const modelInput = document.querySelector("#modelInput");
@@ -9,31 +9,30 @@ const carMake = document.querySelector("#car-make");
 const carModel = document.querySelector("#car-model");
 const carYear = document.querySelector("#car-year");
 const removeBtn = document.querySelector(".removeBtn");
-const yearMake = document.querySelector("#year-make");
 const wishListUl = document.querySelector("#wishlistContainer > ul");
-//Creates instance of WishList class
-const wishlist = new WishList();
-submitForm.addEventListener("submit", addCar);
-removeBtn.addEventListener("submit", removeCar);
 
+// Creates an instance of WishList class
+const wishlist = new WishList();
+
+// Event listeners
+submitForm.addEventListener("submit", addCar);
+removeBtn.addEventListener("click", removeCar);
 
 function showCarDetails(car) {
     carMake.textContent = car.make;
     carModel.textContent = car.model;
     carYear.textContent = car.year;
-    //Enables Remove Button to work
     removeBtn.disabled = false;
-    //This Creates a custom attribute on HTML DOM Element, and gives it a value.
-    removeBtn.setAttribute("data-carId", car.Id)
+    removeBtn.setAttribute("data-carId", car.id); // Use lowercase 'id'
 }
 
 function updateDOMList() {
-    //Clear out the contents of the unordered list
+    // Clear out the contents of the unordered list
     wishListUl.innerHTML = "";
 
     wishlist.list.forEach((dreamCar) => {
         const newLi = document.createElement("li");
-        newLi.textContent = dreamCar.make + " " + dreamCar.model;
+        newLi.textContent = `${dreamCar.make} ${dreamCar.model}`;
         newLi.addEventListener("click", () => {
             showCarDetails(dreamCar);
         });
@@ -41,17 +40,21 @@ function updateDOMList() {
     });
 }
 
-function addCar(submitEvent){
+function addCar(submitEvent) {
     submitEvent.preventDefault();
-    wishlist.add(makeInput.ariaValueMax, modelInput.ariaValueMax, yearInput.value);
-    if(makeVal && modelVal && yearVal){
+    const makeVal = makeInput.value.trim();
+    const modelVal = modelInput.value.trim();
+    const yearVal = yearInput.value.trim();
+
+    if (makeVal && modelVal && yearVal) {
+        wishlist.add(makeVal, modelVal, yearVal);
         updateDOMList();
         makeInput.value = "";
         modelInput.value = "";
         yearInput.value = "";
-
+    } else {
+        alert("Please fill in all fields.");
     }
-    
 }
 
 function removeCar() {
@@ -61,6 +64,5 @@ function removeCar() {
     carMake.textContent = "";
     carModel.textContent = "";
     carYear.textContent = "";
-    removeBtn.disabled = true
-
+    removeBtn.disabled = true;
 }
