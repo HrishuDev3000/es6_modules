@@ -1,26 +1,19 @@
-import Car from  "./car";
+import Car from "./car";
 
 class WishList {
-    constructor() {
-        this.list = [];
-        this.nextID = 0;
-    }
+  constructor() {
+    this.list = [];
+    this.nextId = 0;
+  }
 
-    add(make, model, year){
-        const nextCar = new Car(++this.nextID, make, model, year);
-        this.list.push(nextCar);
-    }
+  add(make, model, year) {
+    let car = new Car(this.nextId++, make, model, year);
+    this.list.push(car);
+  }
 
-    remove(carId){
-        for(let i = 0; i < this.list.length; i++){
-            if( list[i] == carId){
-                this.list.splice(i,1);
-            }
-        }
-    }
-
-
+  remove(carId) {
+    this.list = this.list.filter((car) => car.id != carId);
+  }
 }
-
 
 export default WishList;
