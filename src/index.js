@@ -1,4 +1,4 @@
-import WishList from "./classes/wishlist";
+import WishList from "./wishlist";
 
 let form = document.querySelector("#submitForm");
 let makeInput = document.querySelector("#makeInput");
